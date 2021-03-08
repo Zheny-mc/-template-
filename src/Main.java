@@ -2,9 +2,15 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Main {
-	public static void main(String[] args) {	
-		JFrame frame = new JFrame("Template");
-		
+	private static JFrame frame;
+	private static GraphicsPanel graphicsPanel;
+	
+	public static void cofigurui() {
+		frame = new JFrame("Template");
+		graphicsPanel = new GraphicsPanel(); 
+	}
+	
+	public static void renderWindow() {
 		final int width = 640;
 		final int height = 480;
 		frame.setSize(new Dimension(width, height));
@@ -12,8 +18,6 @@ public class Main {
 		frame.setLayout(new GridBagLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//******************************************
-		
-		GraphicsPanel graphicsPanel = new GraphicsPanel(); 
 		
 		frame.addKeyListener(graphicsPanel);
 		
@@ -23,5 +27,10 @@ public class Main {
 	
 		//*******************************************
 		frame.setVisible(true);
+	}
+	
+	public static void main(String[] args) {	
+		cofigurui();
+		renderWindow();
 	}
 }

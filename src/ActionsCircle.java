@@ -33,7 +33,7 @@ public class ActionsCircle extends Actions {
 		action.clear();
 		for (int i = 0; i < 3; i++) {
 			for (double j = 0.d; j <= 10; j+=0.05) {
-				for (int k = 0; k < 500; k++) {
+				for (int k = 0; k < 10; k++) {
 					
 					action.add(figure.getState());
 					figure.upRadius();
@@ -43,7 +43,7 @@ public class ActionsCircle extends Actions {
 			}
 			
 			for (double j = 0.d; j <= 10; j+=0.05) {
-				for (int k = 0; k < 500; k++) {
+				for (int k = 0; k < 10; k++) {
 					action.add(figure.getState());
 					figure.downRadius();
 					action.add(figure.getState());
@@ -70,7 +70,7 @@ public class ActionsCircle extends Actions {
 					figure.move((-alpha*0.0174533), i, DISTANCE);
 				}
 			}
-			for (int k = 0; k < 5000; k++) {
+			for (int k = 0; k < 500; k++) {
 				action.add(figure.getState());
 				figure.upRadius();
 			}
