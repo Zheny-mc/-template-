@@ -7,6 +7,8 @@ import java.awt.SystemColor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.Ellipse2D;
+import java.util.Vector;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -15,10 +17,9 @@ public class GraphicsPanel extends JPanel implements Runnable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Circle circle;
-	
-	private int widthMap; 
-	private int heightMap;
+	private Ellipse2D figure;
+	private Actions actions;
+	private Vector<StateFigure> states;
 	
 	private boolean isClockWiseMovement;
 	private boolean isUpMoreRadiusDownLessRadius;
@@ -31,17 +32,14 @@ public class GraphicsPanel extends JPanel implements Runnable{
 		isUpMoreRadiusDownLessRadius = false;
 		isCircleMotionAndIncreaseInRadius = false;
 		
-		circle = new Circle(250, 250, 30, 30);
+		figure = new Circle(250, 250, 30, 30);
+		actions = new ActionsCircle();
+		actions.render();
+		states = null;
 		
 		controller = new NumberKeyListener();
 		
 		(new Thread(this)).start(); 
-	}
-	
-	public GraphicsPanel(int widthMap, int heightMap) {
-		this();
-		this.widthMap = widthMap; 
-		this.heightMap = heightMap;
 	}
 	
 	public KeyAdapter getController() {
@@ -54,8 +52,8 @@ public class GraphicsPanel extends JPanel implements Runnable{
 		Graphics2D g2 = (Graphics2D)g;
 		
 		g2.setColor(Color.green);
-		g2.fill(circle);
-		g2.draw(circle);
+		g2.fill(figure);
+		g2.draw(figure);
 	}
 
 	private class NumberKeyListener extends KeyAdapter {
@@ -83,98 +81,41 @@ public class GraphicsPanel extends JPanel implements Runnable{
 		}
 	}
 	
+	public void movie(final int delay) {
+		states = actions.getAction();
+		
+		for (int i = 0; i < states.size(); i++) {
+			figure.setFrame(states.get(i).getPoint().getX(), states.get(i).getPoint().getY(), states.get(i).getWidth(), states.get(i).getHeight());
+			try {
+				super.repaint();
+				Thread.sleep(delay);
+			} catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public void run() {
 		while (true) {
 			System.out.println("ClockWiseMovement" + isClockWiseMovement);
 			if (isClockWiseMovement) {
-				clockWiseMovement();
+				actions.clockWiseMovement();
+				movie(1);
 				isClockWiseMovement = false;
 			}
 			System.out.println("UpMoreRadiusDownLessRadius" + isUpMoreRadiusDownLessRadius);
 			if (isUpMoreRadiusDownLessRadius) {
-				upMoreRadiusDownLessRadius();
+				actions.upMoreRadiusDownLessRadius();
+				movie(1);
 				isUpMoreRadiusDownLessRadius = false;
 			}
 			System.out.println("CircleMotionAndIncreaseInRadius" + isCircleMotionAndIncreaseInRadius);
 			if (isCircleMotionAndIncreaseInRadius) {
-				circleMotionAndIncreaseInRadius();
+				actions.circleMotionAndIncreaseInRadius();
+				movie(1);
 				isCircleMotionAndIncreaseInRadius = false;
 			}
 		}
 		
-	}
-	
-	public void clockWiseMovement() {
-		
-		 for (int i = 0; i <= 360; i+=15) {
-			for (double j = 0.d; j < 1; j+=0.005) {
-				try {
-					circle.move((i*0.0174533), 1);
-					super.repaint();
-					Thread.sleep(1);
-				} catch(InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			circle.setCurDistance(0);
-			circle.setFrame(250, 250, 30, 30);
-		}
-	}
-	
-	public void upMoreRadiusDownLessRadius() {
-		
-		for (int i = 0; i < 3; i++) {
-			for (double j = 0.d; j <= 10; j+=0.005) {
-				try {
-					for (int k = 0; k < 10; k++) {
-						circle.upRadius();
-						circle.moveUpBoard();
-					}
-						
-					super.repaint();
-					Thread.sleep(1);
-				} catch(InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			
-			for (double j = 0.d; j <= 10; j+=0.005) {
-				try {
-					for (int k = 0; k < 10; k++) {
-						circle.downRadius();
-						circle.moveDownBoard();
-					}
-					
-					super.repaint();
-					Thread.sleep(1);
-				} catch(InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-	
-	public void circleMotionAndIncreaseInRadius() {
-		final double DELTA = 0.005d;
-		final int DELTA_ALPHA = 3;
-		final double DISTANCE = 0.15;
-		
-		for (int num = 0; num <= 3; num++) {
-			for (int alpha = 0; alpha < 360; alpha+=DELTA_ALPHA) {
-				for (double i = 0; i <= DISTANCE; i+=DELTA) {
-					try {
-						circle.move((-alpha*0.0174533), DISTANCE);
-						super.repaint();
-						Thread.sleep(1);
-					} catch(InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				circle.setCurDistance(0);
-			}
-			for (int k = 0; k < 5000; k++)
-				circle.upRadius();
-	
-		}
 	}
 }

@@ -1,11 +1,9 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class Main
-{
-	public static void main(String[] args) 
-	{	
-		JFrame frame = new JFrame("Шаблоны");
+public class Main {
+	public static void main(String[] args) {	
+		JFrame frame = new JFrame("Template");
 		
 		final int width = 640;
 		final int height = 480;
@@ -15,7 +13,7 @@ public class Main
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//******************************************
 		
-		GraphicsPanel graphicsPanel = new GraphicsPanel(width, height); 
+		GraphicsPanel graphicsPanel = new GraphicsPanel(); 
 		
 		frame.addKeyListener(graphicsPanel.getController());
 		
