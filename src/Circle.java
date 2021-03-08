@@ -12,7 +12,7 @@ public class Circle extends Ellipse2D implements SimpleFigure{
 	private double width0;
 	private double height0;
 
-	private final double delta = 0.005d;
+	private final double delta = 0.05d;
 	
 	public Circle() {
 		point = new Point();

@@ -13,7 +13,7 @@ import java.util.Vector;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-public class GraphicsPanel extends JPanel implements Runnable{
+public class GraphicsPanel extends JPanel implements Runnable, KeyListener{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -25,7 +25,7 @@ public class GraphicsPanel extends JPanel implements Runnable{
 	private boolean isUpMoreRadiusDownLessRadius;
 	private boolean isCircleMotionAndIncreaseInRadius;
 	
-	private KeyAdapter controller;
+	//private KeyAdapter controller;
 
 	public GraphicsPanel() {
 		isClockWiseMovement = false;
@@ -37,14 +37,15 @@ public class GraphicsPanel extends JPanel implements Runnable{
 		actions.render();
 		states = null;
 		
-		controller = new NumberKeyListener();
+		//controller = new NumberKeyListener();
 		
 		(new Thread(this)).start(); 
 	}
-	
+	/*
 	public KeyAdapter getController() {
 	    return controller;
 	}
+	*/
 	
 	@Override
 	public void paintComponent(Graphics g) {
@@ -56,30 +57,25 @@ public class GraphicsPanel extends JPanel implements Runnable{
 		g2.draw(figure);
 	}
 
-	private class NumberKeyListener extends KeyAdapter {
+	@Override
+	public void keyTyped(KeyEvent e) {}
 
-		@Override
-		public void keyTyped(KeyEvent e) {}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			if (e.getKeyCode() == (int)'Q') {
-				isClockWiseMovement = true;
-				//System.out.println("ClockWiseMovement");
-			} else if (e.getKeyCode() == (int)'W') {
-				isUpMoreRadiusDownLessRadius = true;
-				//System.out.println("UpMoreRadiusDownLessRadius");
-			} else if (e.getKeyCode() == (int)'E') {
-				isCircleMotionAndIncreaseInRadius = true;
-				//System.out.println("CircleMotionAndIncreaseInRadius");
-			}
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == (int)'Q') {
+			isClockWiseMovement = true;
+			//System.out.println("ClockWiseMovement");
+		} else if (e.getKeyCode() == (int)'W') {
+			isUpMoreRadiusDownLessRadius = true;
+			//System.out.println("UpMoreRadiusDownLessRadius");
+		} else if (e.getKeyCode() == (int)'E') {
+			isCircleMotionAndIncreaseInRadius = true;
+			//System.out.println("CircleMotionAndIncreaseInRadius");
 		}
 	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {}
 	
 	public void movie(final int delay) {
 		states = actions.getAction();

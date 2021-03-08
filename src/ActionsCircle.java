@@ -32,19 +32,21 @@ public class ActionsCircle extends Actions {
 	public void upMoreRadiusDownLessRadius() {
 		action.clear();
 		for (int i = 0; i < 3; i++) {
-			for (double j = 0.d; j <= 10; j+=0.005) {
-				for (int k = 0; k < 10; k++) {
+			for (double j = 0.d; j <= 10; j+=0.05) {
+				for (int k = 0; k < 500; k++) {
 					
 					action.add(figure.getState());
 					figure.upRadius();
+					action.add(figure.getState());
 					figure.moveUpBoard();
 				}		
 			}
 			
-			for (double j = 0.d; j <= 10; j+=0.005) {
-				for (int k = 0; k < 10; k++) {
+			for (double j = 0.d; j <= 10; j+=0.05) {
+				for (int k = 0; k < 500; k++) {
 					action.add(figure.getState());
 					figure.downRadius();
+					action.add(figure.getState());
 					figure.moveDownBoard();
 				}
 			}

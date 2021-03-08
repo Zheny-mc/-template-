@@ -15,7 +15,7 @@ public class Main {
 		
 		GraphicsPanel graphicsPanel = new GraphicsPanel(); 
 		
-		frame.addKeyListener(graphicsPanel.getController());
+		frame.addKeyListener(graphicsPanel);
 		
 		frame.add(graphicsPanel, new GridBagConstraints(0, 0, 1, 1, 1, 1, 
 				GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
