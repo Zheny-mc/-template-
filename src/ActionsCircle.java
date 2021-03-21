@@ -1,6 +1,9 @@
 import java.util.Vector;
 
 public class ActionsCircle extends Actions {
+	private final Point BIGIN_POINT = new Point(250, 250);
+	private final int RADIUS = 30;
+	private final double TO_RADIAN = 0.0174533;
 	
 	public ActionsCircle() {
 		super();
@@ -9,34 +12,27 @@ public class ActionsCircle extends Actions {
 
 	@Override
 	public SimpleFigure createFigure() {
-		return new Circle(250, 250, 30, 30);
-	}
-
-	@Override
-	public Vector<StateFigure> getAction() {
-		return action;
+		return new Circle(BIGIN_POINT.getX(), BIGIN_POINT.getY(), RADIUS, RADIUS);
 	}
 	
-	@Override
 	public void clockWiseMovement() {
-		action.clear();
-		for (int alpha = 0; alpha <= 360; alpha+=15) {
-			for (double j = 0.d; j < 1; j+=0.05) {
+		final int PI_2 = 360;
+		for (int alpha = 15; alpha <= PI_2; alpha+=15) {
+			for (double j = 0; j < 1; j+=0.05) {
 				action.add(figure.getState());
-				figure.move((alpha*0.0174533), j, 1);
+				figure.move((alpha*TO_RADIAN), j);
 			}
 		}
 	}
 
-	@Override
+	
 	public void upMoreRadiusDownLessRadius() {
-		action.clear();
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 1; i++) {
 			for (double j = 0.d; j <= 10; j+=0.05) {
 				for (int k = 0; k < 10; k++) {
 					
 					action.add(figure.getState());
-					figure.upRadius();
+					figure.upSize();
 					action.add(figure.getState());
 					figure.moveUpBoard();
 				}		
@@ -45,7 +41,7 @@ public class ActionsCircle extends Actions {
 			for (double j = 0.d; j <= 10; j+=0.05) {
 				for (int k = 0; k < 10; k++) {
 					action.add(figure.getState());
-					figure.downRadius();
+					figure.downSize();
 					action.add(figure.getState());
 					figure.moveDownBoard();
 				}
@@ -55,26 +51,69 @@ public class ActionsCircle extends Actions {
 		
 	}
 
-	@Override
 	public void circleMotionAndIncreaseInRadius() {
-		action.clear();
-		
 		final double DELTA = 0.005d;
 		final int DELTA_ALPHA = 3;
 		final double DISTANCE = 0.15;
+		final int PI_2 = 360;
 		
-		for (int num = 0; num <= 3; num++) {
-			for (int alpha = 0; alpha < 360; alpha+=DELTA_ALPHA) {
+		for (int num = 0; num < 1; num++) {
+			for (int alpha = 0; alpha < PI_2; alpha+=DELTA_ALPHA) {
 				for (double i = 0; i <= DISTANCE; i+=DELTA) {
 					action.add(figure.getState());
-					figure.move((-alpha*0.0174533), i, DISTANCE);
+					figure.move((-alpha*0.0174533), i);
 				}
 			}
 			for (int k = 0; k < 500; k++) {
 				action.add(figure.getState());
-				figure.upRadius();
+				figure.upSize();
 			}
 	
+		}
+	}
+	
+	private void fourCircle() {
+		clockWiseMovement();
+		
+		for (int i = 0; i < 3000; i++) {
+			figure.moveLeftBoard();
+		}
+		
+		clockWiseMovement();
+		
+		for (int i = 0; i < 3000; i++) {
+			figure.moveUpBoard();
+		}
+		
+		clockWiseMovement();
+		
+		for (int i = 0; i < 3000; i++) {
+			figure.moveRigthBoard();
+		}
+		
+		clockWiseMovement();
+	}
+
+	@Override
+	public void movie(final int numAction) {
+		action.clear();
+		
+		switch(numAction) {
+		case 0:
+			clockWiseMovement();
+			break;
+		
+		case 1:
+			upMoreRadiusDownLessRadius();
+			break;
+			
+		case 2:
+			circleMotionAndIncreaseInRadius();
+			break;
+
+		case 3:
+			fourCircle();
+			break;
 		}
 	}
 

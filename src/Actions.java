@@ -2,18 +2,17 @@ import java.util.Vector;
 
 public abstract class Actions {
 	
-	protected Vector<StateFigure> action;
 	protected SimpleFigure figure;
+	protected Vector<StateFigure> action;
 	
 	public void render() {
 		figure = createFigure();
 	}
 	
+	public Vector<StateFigure> getAction() {
+		return action;
+	}
+	
 	public abstract SimpleFigure createFigure();
-	
-	public abstract Vector<StateFigure> getAction();
-	
-	public abstract void clockWiseMovement();
-	public abstract void upMoreRadiusDownLessRadius();
-	public abstract void circleMotionAndIncreaseInRadius();
+	public abstract void movie(final int numAction);
 }

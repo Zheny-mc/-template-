@@ -17,6 +17,15 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener{
 	
 	private static final long serialVersionUID = 1L;
 	
+	private final int KEY_CLOCK_WISE_MOVEMENT = (int)'Q';
+	private final int KEY_UP_MORE_RADIUS_DOWN_LESS_RADIUS = (int)'W';
+	private final int KEY_CIRCLE_MOTION_AND_INCREASE_IN_RADIUS = (int)'E';
+	private final int KEY_FOUR_CIRCLE = (int)'R';
+	
+	private final Point BIGIN_POINT = new Point(250, 250);
+	private final int RADIUS = 30;
+	private int indexMovement;
+	//******************************************************************
 	private Ellipse2D figure;
 	private Actions actions;
 	private Vector<StateFigure> states;
@@ -24,32 +33,25 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener{
 	private boolean isClockWiseMovement;
 	private boolean isUpMoreRadiusDownLessRadius;
 	private boolean isCircleMotionAndIncreaseInRadius;
-	
-	//private KeyAdapter controller;
+	private boolean isFourCircle;
 
 	public GraphicsPanel() {
 		isClockWiseMovement = false;
 		isUpMoreRadiusDownLessRadius = false;
 		isCircleMotionAndIncreaseInRadius = false;
+		isFourCircle = false;
 		
-		figure = new Circle(250, 250, 30, 30);
+		figure = new Circle(BIGIN_POINT.getX(), BIGIN_POINT.getY(), RADIUS, RADIUS);
 		actions = new ActionsCircle();
 		actions.render();
 		states = null;
 		
-		//controller = new NumberKeyListener();
-		
 		(new Thread(this)).start(); 
 	}
-	/*
-	public KeyAdapter getController() {
-	    return controller;
-	}
-	*/
 	
 	@Override
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+		//super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
 		
 		g2.setColor(Color.green);
@@ -62,15 +64,18 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == (int)'Q') {
+		if (e.getKeyCode() == KEY_CLOCK_WISE_MOVEMENT) {
 			isClockWiseMovement = true;
-			//System.out.println("ClockWiseMovement");
-		} else if (e.getKeyCode() == (int)'W') {
+			indexMovement = 0;
+		} else if (e.getKeyCode() == KEY_UP_MORE_RADIUS_DOWN_LESS_RADIUS) {
 			isUpMoreRadiusDownLessRadius = true;
-			//System.out.println("UpMoreRadiusDownLessRadius");
-		} else if (e.getKeyCode() == (int)'E') {
+			indexMovement = 1;
+		} else if (e.getKeyCode() == KEY_CIRCLE_MOTION_AND_INCREASE_IN_RADIUS) {
 			isCircleMotionAndIncreaseInRadius = true;
-			//System.out.println("CircleMotionAndIncreaseInRadius");
+			indexMovement = 2;
+		} else if (e.getKeyCode() == KEY_FOUR_CIRCLE) {
+			isFourCircle = true;
+			indexMovement = 3;
 		}
 	}
 
@@ -81,7 +86,12 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener{
 		states = actions.getAction();
 		
 		for (int i = 0; i < states.size(); i++) {
-			figure.setFrame(states.get(i).getPoint().getX(), states.get(i).getPoint().getY(), states.get(i).getWidth(), states.get(i).getHeight());
+			figure.setFrame(
+				states.get(i).getPoint().getX(), 
+				states.get(i).getPoint().getY(), 
+				states.get(i).getWidth(), 
+				states.get(i).getHeight()
+			);
 			try {
 				super.repaint();
 				Thread.sleep(delay);
@@ -93,23 +103,29 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener{
 	
 	public void run() {
 		while (true) {
-			System.out.println("ClockWiseMovement" + isClockWiseMovement);
+			System.out.println("ClockWiseMovement: " + isClockWiseMovement);
 			if (isClockWiseMovement) {
-				actions.clockWiseMovement();
+				actions.movie(indexMovement);
 				movie(1);
 				isClockWiseMovement = false;
 			}
-			System.out.println("UpMoreRadiusDownLessRadius" + isUpMoreRadiusDownLessRadius);
+			System.out.println("UpMoreRadiusDownLessRadius: " + isUpMoreRadiusDownLessRadius);
 			if (isUpMoreRadiusDownLessRadius) {
-				actions.upMoreRadiusDownLessRadius();
+				actions.movie(indexMovement);
 				movie(1);
 				isUpMoreRadiusDownLessRadius = false;
 			}
-			System.out.println("CircleMotionAndIncreaseInRadius" + isCircleMotionAndIncreaseInRadius);
+			System.out.println("CircleMotionAndIncreaseInRadius: " + isCircleMotionAndIncreaseInRadius);
 			if (isCircleMotionAndIncreaseInRadius) {
-				actions.circleMotionAndIncreaseInRadius();
+				actions.movie(indexMovement);
 				movie(1);
 				isCircleMotionAndIncreaseInRadius = false;
+			}
+			System.out.println("isFourCircle: " + isFourCircle);
+			if (isFourCircle) {
+				actions.movie(indexMovement);
+				movie(1);
+				isFourCircle = false;
 			}
 		}
 		

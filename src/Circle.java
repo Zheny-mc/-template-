@@ -79,7 +79,7 @@ public class Circle extends Ellipse2D implements SimpleFigure{
 		height0 = height;
 	}
 	
-	public void upRadius() {
+	public void upSize() {
 		width0 += delta;
 		height0 += delta;
 		
@@ -88,7 +88,7 @@ public class Circle extends Ellipse2D implements SimpleFigure{
 		this.setFrame(point0.getX(), point0.getY(), width0, height0);
 	}
 	
-	public void downRadius() {
+	public void downSize() {
 		width0 -= delta;
 		height0 -= delta;
 		
@@ -117,18 +117,14 @@ public class Circle extends Ellipse2D implements SimpleFigure{
 		this.setFrame(point0.getX(), point0.getY(), width, height);
 	}
 	
-	public void move(double alpha, double curDistance, double length) {
+	public void move(double alpha, double Distance) {
+			
+		double x0 = Math.cos(alpha) * Distance;
+		double y0 = Math.sin(alpha) * Distance;
 		
-		if (curDistance + delta <= length) {
-			curDistance += delta;
-			
-			double x0 = Math.cos(alpha) * curDistance;
-			double y0 = Math.sin(alpha) * curDistance;
-			
-			point0.setLocation(point0.getX()+x0, point0.getY()+y0);
-			
-			this.setFrame(point0.getX(), point0.getY(), width, height);
-		}
+		point0.setLocation(point0.getX()+x0, point0.getY()+y0);
+		
+		this.setFrame(point0.getX(), point0.getY(), width, height);
 	}
 }
 
