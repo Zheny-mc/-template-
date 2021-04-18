@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    
+
+	<!-- Инициализация бина через конструктор  -->     
+    <bean id="circle" class="springhw.Model.Circle">
+        <constructor-arg value="250"/>
+        <constructor-arg value="250"/>
+        <constructor-arg value="30"/>
+        <constructor-arg value="30"/>
+   	</bean>
+
+	<bean id="complexMovingCircle" class="springhw.Model.ComplexMovingCircle"/>
+	
+	<!-- *********************keys*************************************** -->
+	<!--  	
+	<bean id="keyQ" class="Integer">
+		<constructor-arg value="0"/>
+	</bean>
+	
+    <bean id="keyW" class="Integer">
+		<constructor-arg value="0"/>
+	</bean>
+	
+	<bean id="keyE" class="Integer">
+		<constructor-arg value="0"/>
+	</bean>
+	--> 
+	 <!--  ********************** info *********************************** -->
+	<bean id="circleMotionAndIncreaseInRadius" 
+		class="springhw.complex.CircleMotionAndIncreaseInRadius" /> 
+	
+	<bean id="info1" class="springhw.Model.InfoComplexMoving" >
+		<property name="info" value="Circle Motion And Increase In Radius"/>
+		<property name="complexMoving" ref="circleMotionAndIncreaseInRadius"/>
+		<property name="isMake" value="false"/> 
+	</bean>
+	
+	<bean id="clockWiseMovement" 
+		class="springhw.complex.ClockWiseMovement" /> 
+	
+	<bean id="info2" class="springhw.Model.InfoComplexMoving">
+		<property name="info" value="Clock Wise Movement"/>
+		<property name="complexMoving" ref="clockWiseMovement"/>
+		<property name="isMake" value="false"/> 
+	</bean>
+	
+	<bean id="upMoreRadiusDownLessRadius" 
+		class="springhw.complex.UpMoreRadiusDownLessRadius" /> 	
+	
+	<bean id="info3" class="springhw.Model.InfoComplexMoving">
+		<property name="info" value="Up - MoreRadius, Down - LessRadius"/>
+		<property name="complexMoving" ref="upMoreRadiusDownLessRadius"/>
+		<property name="isMake" value="false"/> 
+	</bean>
+	<!-- *************************************************************** -->
+	
+
+</beans>
+
+<!--  
+ 	<bean id="helloFactory" class="springhw.beans.HelloBeanFactory"/> 
+//keys.add('Q');
+		//keys.add('W');
+		//keys.add('E');
+		
+//obj.add(new InfoComplexMoving());
+		//obj.add(new InfoComplexMoving());
+		//obj.add(new InfoComplexMoving());
+		
+		obj.get(0).setInfo("CircleMotionAndIncreaseInRadius");
+		obj.get(0).setComplexMoving(new CircleMotionAndIncreaseInRadius());
+		
+		obj.get(1).setInfo("ClockWiseMovement");
+		obj.get(1).setComplexMoving(new ClockWiseMovement());
+		
+		obj.get(2).setInfo("UpMoreRadiusDownLessRadius");
+		obj.get(2).setComplexMoving(new UpMoreRadiusDownLessRadius());
+		
+-->		
+		
