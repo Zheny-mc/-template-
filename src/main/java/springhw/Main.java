@@ -14,6 +14,7 @@ public class Main {
 		
 		frame = ctx.getBean("frame", JFrame.class);
 		graphicsPanel = ctx.getBean("graphicsPanel", GraphicsPanel.class);
+		graphicsPanel.startThread();
 		
 		ctx.close();
 	}
@@ -33,6 +34,7 @@ public class Main {
 				GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
 				new Insets(2, 2, 2, 2), 0, 0));
 	
+		
 		//*******************************************
 		frame.setVisible(true);
 	}

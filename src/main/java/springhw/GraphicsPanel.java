@@ -6,25 +6,15 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Vector;
-
 import javax.swing.JPanel;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
-
 import springhw.Model.Circle;
 import springhw.Model.ComplexMovingCircle;
 import springhw.Model.InfoComplexMoving;
 import springhw.Model.StateFigure;
-import springhw.complex.CircleMotionAndIncreaseInRadius;
-import springhw.complex.ClockWiseMovement;
-import springhw.complex.UpMoreRadiusDownLessRadius;
 
 public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 	private static final long serialVersionUID = 1L;
@@ -32,62 +22,45 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 	private Circle circle;
 	private ComplexMovingCircle complexMovingCircle;
 	private Vector<StateFigure> states;
+	private Map<Integer, InfoComplexMoving> buttons;
+	
+	public GraphicsPanel() {}
+	
+	public void startThread() {
+		(new Thread(this)).start();
+	}
+	
+	public void setCircle(Circle circle) {
+		this.circle = circle;
+	}
+	
+	public void setComplexMovingCircle(ComplexMovingCircle complexMovingCircle) {
+		this.complexMovingCircle = complexMovingCircle;
+	}
 
-	private HashMap<Integer, InfoComplexMoving> buttons;
-	
-	public GraphicsPanel() {
-		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("graphicsPanelContext.xml");
-		circle = ctx.getBean("circle", Circle.class);
-		complexMovingCircle = ctx.getBean("complexMovingCircle", ComplexMovingCircle.class);
-		ctx.close();
-		
-		createButtons();
-		
-		(new Thread(this)).start(); 
+	public void setStates(Vector<StateFigure> states) {
+		this.states = states;
 	}
 	
-	
-	public void createButtons() {
-		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("graphicsPanelContext.xml");
-		
-		Vector<Character> keys = new Vector<Character>();
-		/*
-		 * spring
-		keys.add( ctx.getBean("keyQ", Character.class) );
-		keys.add( ctx.getBean("keyW", Character.class) );
-		keys.add( ctx.getBean("keyE", Character.class) );
-		*/
-		
-		keys.add('Q');
-		keys.add('W');
-		keys.add('E');
-		
-		Vector<InfoComplexMoving> obj = new Vector<InfoComplexMoving>();
-		
-		obj.add( ctx.getBean("info1", InfoComplexMoving.class) );
-		obj.add( ctx.getBean("info2", InfoComplexMoving.class) );
-		obj.add( ctx.getBean("info3", InfoComplexMoving.class) );
-		
-		ctx.close();
-		
-		final int n = obj.size();
-		buttons = new HashMap<Integer, InfoComplexMoving>();
-		
-		for (int i = 0; i < n; i++) {
-			buttons.put((int)keys.get(i), obj.get(i));
-		}
-	}
+	public void setButtons(Map<Integer, InfoComplexMoving> buttons) {
+		this.buttons = buttons;
+	}	
 	
 	//************Панель управления*******************
 	@Override
 	public void keyTyped(KeyEvent e) {}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased(KeyEvent e) {		
 		int eKey = e.getKeyCode();
-		buttons.get(eKey).setIsMake(true);
 		
-		System.out.println((char)eKey + ": " + buttons.get(eKey).getInfo());
+		try {	
+			buttons.get(eKey).setIsMake(true);
+			System.out.println((char)eKey + ": " + buttons.get(eKey).getInfo());
+		} catch(NullPointerException ex) {
+			System.out.println(ex.getMessage());
+		}
+
 	}
 
 	@Override
@@ -98,8 +71,8 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
+		g2.setColor(Color.green);
 		
-		g2.setColor(Color.red);
 		g2.fill(circle);
 		g2.draw(circle);
 	}
@@ -120,8 +93,7 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 	
 	public void run() {
 		
-		while (true) {
-			
+		while (true) {	
 			Iterator it = buttons.entrySet().iterator();
 			while (it.hasNext()) {
 				Entry entry = (Entry) it.next();

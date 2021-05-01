@@ -9,7 +9,6 @@ public abstract class ComplexMoving {
 	public Vector<StateFigure> executeMovings(Circle circle) {
 		states.clear();
 		
-		states.add(circle.getState());
 		for (Moving i: movings) {
 			states.add(i.move(circle));
 		}
