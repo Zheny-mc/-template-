@@ -4,6 +4,7 @@ import springhw.Model.Circle;
 import springhw.Model.Moving;
 import springhw.Model.StateFigure;
 
+
 public class MoveAlpha implements Moving {
 
 	private double alpha;

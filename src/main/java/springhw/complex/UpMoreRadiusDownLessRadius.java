@@ -6,6 +6,9 @@ import springhw.simple.MoveDownBoard;
 import springhw.simple.MoveUpBoard;
 import springhw.simple.UpSize;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class UpMoreRadiusDownLessRadius extends ComplexMoving {
 
 	public UpMoreRadiusDownLessRadius() {
