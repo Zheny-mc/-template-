@@ -2,6 +2,9 @@ package springhw.Model;
 
 import java.util.Vector;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ComplexMovingCircle {
 	ComplexMoving complexMoving;
 	

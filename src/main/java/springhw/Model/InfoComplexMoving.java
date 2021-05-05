@@ -1,28 +1,22 @@
 package springhw.Model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class InfoComplexMoving {
 	
-	String info;
+	private String info;
 	ComplexMoving complexMoving;
-	Boolean isMake;
+	private Boolean isMake;
 	
 	public InfoComplexMoving() {
 		isMake = false;
-		complexMoving = null;
 	}
 	
-	public InfoComplexMoving(String info, ComplexMoving complexMoving, Boolean isMake) {
+	public InfoComplexMoving(String info, ComplexMoving complexMoving) {
 		this.info = info;
 		this.complexMoving = complexMoving;
-		this.isMake = isMake;
-	}
-
-	public String getInfo() {
-		return info;
-	}
-
-	public void setInfo(String info) {
-		this.info = info;
+		isMake = false;
 	}
 
 	public ComplexMoving getComplexMoving() {
@@ -33,6 +27,14 @@ public class InfoComplexMoving {
 		this.complexMoving = complexMoving;
 	}
 
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
 	public Boolean getIsMake() {
 		return isMake;
 	}
@@ -40,6 +42,4 @@ public class InfoComplexMoving {
 	public void setIsMake(Boolean isMake) {
 		this.isMake = isMake;
 	}
-	
-	
 }

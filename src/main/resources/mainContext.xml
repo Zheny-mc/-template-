@@ -2,17 +2,19 @@
 <beans  xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:aop="http://www.springframework.org/schema/aop"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
-
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+	
+	<context:component-scan base-package="springhw"/>
+	<!--
+	
 	<context:property-placeholder location="classpath:configPanel.properties" />
-       
-    <bean id="frame" class="javax.swing.JFrame">
-        <constructor-arg value="Template"/>
-   	</bean>
-
+	
     <bean id="circle" class="springhw.Model.Circle">
         <constructor-arg value="${circle.x}"/>
         <constructor-arg value="${circle.y}"/>
@@ -21,8 +23,8 @@
    	</bean>
 	
 	<bean id="complexMovingCircle" class="springhw.Model.ComplexMovingCircle"/>
-
-	<!-- ******************create Movings********************** -->
+	-->
+	<!-- ******************create Movings********************** 
 	<bean id="circleMotionAndIncreaseInRadius" 
 		class="springhw.complex.CircleMotionAndIncreaseInRadius" /> 
 	
@@ -58,8 +60,9 @@
 		<property name="complexMoving" ref="rosette"/>
 		<property name="isMake" value="false"/> 
 	</bean>
+	-->
 	
-	<!-- **********************create graphic panel********************* -->
+	<!-- **********************create graphic panel********************* 
 	<bean id="graphicsPanel" class="springhw.GraphicsPanel">
     	<property name="circle" ref="circle"/>
     	<property name="complexMovingCircle" ref="complexMovingCircle"/>
@@ -75,7 +78,7 @@
         </property>
 	
 	</bean>
-	
+	-->
 	<!-- *************************************************************** -->
 
 </beans>

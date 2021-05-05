@@ -3,6 +3,7 @@ package springhw;
 import java.awt.*;
 import javax.swing.*;
 
+
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Main {
@@ -11,17 +12,19 @@ public class Main {
 	
 	public static void cofigurui() {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("mainContext.xml");
-		
-		frame = ctx.getBean("frame", JFrame.class);
 		graphicsPanel = ctx.getBean("graphicsPanel", GraphicsPanel.class);
-		graphicsPanel.startThread();
+		graphicsPanel.createButtons();
+		graphicsPanel.startThread();	 
 		
 		ctx.close();
+		
+		frame = new JFrame();
 	}
 	
 	public static void renderWindow() {
 		final int width = 640;
 		final int height = 480;
+		frame.setTitle("MovingCircle");
 		frame.setSize(new Dimension(width, height));
 		frame.setLocationRelativeTo(null);
 		frame.setLayout(new GridBagLayout());
@@ -33,7 +36,7 @@ public class Main {
 		frame.add(graphicsPanel, new GridBagConstraints(0, 0, 1, 1, 1, 1, 
 				GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
 				new Insets(2, 2, 2, 2), 0, 0));
-	
+		
 		
 		//*******************************************
 		frame.setVisible(true);
