@@ -1,9 +1,12 @@
 package springhw.complex;
 
+import org.springframework.stereotype.Component;
+
 import springhw.Model.ComplexMoving;
 import springhw.simple.MoveAlpha;
 import springhw.simple.UpSize;
 
+@Component
 public class CircleMotionAndIncreaseInRadius extends ComplexMoving {
 	
 	public CircleMotionAndIncreaseInRadius() {

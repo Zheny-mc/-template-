@@ -5,24 +5,50 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Vector;
 import javax.swing.JPanel;
 import springhw.Model.Circle;
+import springhw.Model.ComplexMoving;
 import springhw.Model.ComplexMovingCircle;
 import springhw.Model.InfoComplexMoving;
+import springhw.Model.ListComplexMoving;
 import springhw.Model.StateFigure;
+import springhw.complex.CircleMotionAndIncreaseInRadius;
+import springhw.complex.ClockWiseMovement;
+import springhw.complex.Rosette;
+import springhw.complex.UpMoreRadiusDownLessRadius;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+
+@Component
+@PropertySource("configPanel.properties")
 public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 	private static final long serialVersionUID = 1L;
 	
+	@Autowired
 	private Circle circle;
+	@Autowired
 	private ComplexMovingCircle complexMovingCircle;
-	private Vector<StateFigure> states;
+	//private Vector<StateFigure> states;
+	
 	private Map<Integer, InfoComplexMoving> buttons;
+
+	@Value("#{'${moving.keys}'.split(',')}")
+	private Integer[] keys;
+	@Value("${moving.info}")
+	private String[] info_keys;
+
+	@Autowired
+	private ListComplexMoving listComplexMoving;
+	private List<ComplexMoving> complexMoving;  
 	
 	public GraphicsPanel() {}
 	
@@ -30,23 +56,18 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 		(new Thread(this)).start();
 	}
 	
-	public void setCircle(Circle circle) {
-		this.circle = circle;
+	public void createButtons() {
+		complexMoving = listComplexMoving.getListComplexMoving();
+		buttons = new HashMap<Integer, InfoComplexMoving>();
+		
+		for (int i = 0; i < complexMoving.size(); ++i) {
+			buttons.put(
+					keys[i], 
+					new InfoComplexMoving(info_keys[i], complexMoving.get(i)));
+		}
 	}
 	
-	public void setComplexMovingCircle(ComplexMovingCircle complexMovingCircle) {
-		this.complexMovingCircle = complexMovingCircle;
-	}
-
-	public void setStates(Vector<StateFigure> states) {
-		this.states = states;
-	}
-	
-	public void setButtons(Map<Integer, InfoComplexMoving> buttons) {
-		this.buttons = buttons;
-	}	
-	
-	//************Панель управления*******************
+	//************РЈРїСЂР°РІР»РµРЅРёРµ*******************
 	@Override
 	public void keyTyped(KeyEvent e) {}
 
@@ -78,7 +99,7 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 	}
 
 	public void movie(final int delay) {
-		states = complexMovingCircle.executeComplexMoving(circle);
+		Vector<StateFigure> states = complexMovingCircle.executeComplexMoving(circle);
 		
 		for (StateFigure i: states) {
 			circle.setFrame(i.getPoint().getX(), i.getPoint().getY(), i.getWidth(), i.getHeight());
@@ -91,6 +112,7 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 		}
 	}
 	
+	@Override
 	public void run() {
 		
 		while (true) {	
@@ -110,4 +132,11 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 			
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return "GraphicsPanel [circle=" + circle + ", complexMovingCircle=" + complexMovingCircle
+				+ ", buttons=" + buttons + "]";
+	}
+
 }

@@ -3,6 +3,9 @@ package springhw.complex;
 import springhw.Model.ComplexMoving;
 import springhw.simple.MoveAlpha;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ClockWiseMovement extends ComplexMoving {
 	
 	public ClockWiseMovement() {

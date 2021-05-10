@@ -1,8 +1,10 @@
 package springhw.Model;
+
+import org.springframework.stereotype.Component;
+
 /*Класс состояния объекта фигуры
  * 
  * */
-
 public class StateFigure {
 	
 	private Point point;
