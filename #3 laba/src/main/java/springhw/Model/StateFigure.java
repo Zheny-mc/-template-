@@ -20,6 +20,13 @@ public class StateFigure {
 		this.height = height;
 	}
 
+	public StateFigure(StateFigure stateFigure) {
+		super();
+		this.point = stateFigure.getPoint();
+		this.width = stateFigure.getWidth();
+		this.height = stateFigure.getHeight();
+	}
+	
 	public Point getPoint() {
 		return point;
 	}

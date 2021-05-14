@@ -18,6 +18,4 @@ public class ClockWiseMovement extends ComplexMoving {
 		}
 	}
 	
-	@Override
-	public void createMoving() {}
 }

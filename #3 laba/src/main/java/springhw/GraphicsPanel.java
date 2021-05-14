@@ -33,6 +33,9 @@ import org.springframework.stereotype.Component;
 public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 	private static final long serialVersionUID = 1L;
 	
+	//-----------for change colors Circle-------------------
+	@Autowired
+	private List<Color> colors;
 	@Autowired
 	private Circle circle;
 	@Autowired
@@ -57,8 +60,6 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 	
 	public void createButtons() {
 		complexMoving = listComplexMoving.getListComplexMoving();
-		for (ComplexMoving i: complexMoving)
-			i.createMoving();
 		
 		buttons = new HashMap<Integer, InfoComplexMoving>();
 		for (int i = 0; i < complexMoving.size(); ++i) {
@@ -94,8 +95,9 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 	public void paintComponent(Graphics g) {
 		//super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
-		g2.setColor(Color.green);
 		
+		g2.setColor(colors.getNextColor());
+
 		g2.fill(circle);
 		g2.draw(circle);
 	}

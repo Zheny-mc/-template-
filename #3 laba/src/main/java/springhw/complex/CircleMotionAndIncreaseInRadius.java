@@ -25,6 +25,4 @@ public class CircleMotionAndIncreaseInRadius extends ComplexMoving {
 		
 	}
 	
-	@Override
-	public void createMoving() {}
 }

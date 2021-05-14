@@ -29,6 +29,12 @@ public class Circle extends Ellipse2D {
 		this.height = height;
 	}
 
+	public Circle(Circle circle) {	
+		point = new Point(circle.getX(), circle.getY());
+		this.width = circle.width;
+		this.height = circle.height;
+	}
+	
 	@Override
 	public Rectangle2D getBounds2D() {
 		return null;
