@@ -16,6 +16,7 @@ import springhw.Model.Circle;
 import springhw.Model.ComplexMoving;
 import springhw.Model.ComplexMovingCircle;
 import springhw.Model.InfoComplexMoving;
+import springhw.Model.ListColors;
 import springhw.Model.ListComplexMoving;
 import springhw.Model.StateFigure;
 import springhw.complex.CircleMotionAndIncreaseInRadius;
@@ -32,10 +33,10 @@ import org.springframework.stereotype.Component;
 @PropertySource("configPanel.properties")
 public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 	private static final long serialVersionUID = 1L;
-	
-	//-----------for change colors Circle-------------------
+	//-------------------------------------------------------
+	//for change colors Circle
 	@Autowired
-	private List<Color> colors;
+	private ListColors colors;
 	@Autowired
 	private Circle circle;
 	@Autowired
@@ -50,8 +51,9 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 
 	@Autowired
 	private ListComplexMoving listComplexMoving;
-	private List<ComplexMoving> complexMoving;  
 	
+	private boolean isClearPanel;
+	//------------------------------------------------
 	public GraphicsPanel() {}
 	
 	public void startThread() {
@@ -59,7 +61,7 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 	}
 	
 	public void createButtons() {
-		complexMoving = listComplexMoving.getListComplexMoving();
+		List<ComplexMoving> complexMoving = listComplexMoving.getListComplexMoving();
 		
 		buttons = new HashMap<Integer, InfoComplexMoving>();
 		for (int i = 0; i < complexMoving.size(); ++i) {
@@ -80,7 +82,7 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 		
 		try {	
 			buttons.get(eKey).setIsMake(true);
-			System.out.println((char)eKey + ": " + buttons.get(eKey).getInfo());
+			System.out.println((char)eKey + "(" + eKey + ")" + ": " + buttons.get(eKey).getInfo());
 		} catch(NullPointerException ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -93,10 +95,14 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 	
 	@Override
 	public void paintComponent(Graphics g) {
-		//super.paintComponent(g);
+		if (isClearPanel) {
+			super.paintComponent(g);
+			isClearPanel = false;
+		}
+			
 		Graphics2D g2 = (Graphics2D)g;
 		
-		g2.setColor(colors.getNextColor());
+		g2.setColor(colors.getNext());
 
 		g2.fill(circle);
 		g2.draw(circle);
@@ -131,6 +137,7 @@ public class GraphicsPanel extends JPanel implements Runnable, KeyListener {
 					complexMovingCircle.setComplexMoving(info.getComplexMoving());
 					movie(1);
 					info.setIsMake(false);
+					isClearPanel = true;
 				}
 				
 			}

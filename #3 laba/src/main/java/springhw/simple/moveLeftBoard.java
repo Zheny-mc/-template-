@@ -4,7 +4,7 @@ import springhw.Model.Circle;
 import springhw.Model.Moving;
 import springhw.Model.StateFigure;
 
-public class moveLeftBoard implements Moving {
+public class MoveLeftBoard implements Moving {
 
 	@Override
 	public StateFigure move(Circle circle) {

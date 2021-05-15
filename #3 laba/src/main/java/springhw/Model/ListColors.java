@@ -17,7 +17,7 @@ public class ListColors {
 		index = 0;
 	}
 
-	public Color getNextColor() {
+	public Color getNext() {
 		if (index >= colors.size())
 			index = 0;
 		return colors.get(index++);

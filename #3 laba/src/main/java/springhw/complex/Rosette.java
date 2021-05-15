@@ -2,7 +2,7 @@ package springhw.complex;
 
 import springhw.Model.ComplexMoving;
 import springhw.simple.MoveAlpha;
-import springhw.simple.moveLeftBoard;
+import springhw.simple.MoveLeftBoard;
 
 import org.springframework.stereotype.Component;
 
