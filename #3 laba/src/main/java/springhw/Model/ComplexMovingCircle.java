@@ -15,4 +15,5 @@ public class ComplexMovingCircle {
 	public Vector<StateFigure> executeComplexMoving(Circle circle) {
 		return complexMoving.executeMovings(circle);
 	}
+
 }

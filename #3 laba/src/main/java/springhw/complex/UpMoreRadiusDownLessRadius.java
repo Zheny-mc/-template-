@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 public class UpMoreRadiusDownLessRadius extends ComplexMoving {
 	
 	public UpMoreRadiusDownLessRadius() {
-		double delta = 0.05d;
+		double delta = 0.0005d;
 		
 		for (double j = 0.d; j <= 10; j+=delta) {
 			for (int k = 0; k < 10; k++) {

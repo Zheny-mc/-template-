@@ -13,7 +13,7 @@ public class Main {
 	public static void cofigurui() {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("mainContext.xml");
 		graphicsPanel = ctx.getBean("graphicsPanel", GraphicsPanel.class);
-		graphicsPanel.createButtons();
+		graphicsPanel.getData().createButtons();
 		graphicsPanel.startThread();	 
 		ctx.close();
 		
@@ -21,8 +21,8 @@ public class Main {
 	}
 	
 	public static void renderWindow() {
-		final int width = 640;
-		final int height = 480;
+		final int width = 1300;
+		final int height = 700;
 		frame.setTitle("MovingCircle");
 		frame.setSize(new Dimension(width, height));
 		frame.setLocationRelativeTo(null);

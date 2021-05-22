@@ -27,7 +27,7 @@ public abstract class ComplexMoving {
 		List<Callable< Vector<StateFigure> >> callables = 
 				new ArrayList<Callable< Vector<StateFigure> >>();
 		
-		final int numbPart = 6;
+		final int numbPart = 1;
 		for (int i = 0; i < numbPart; ++i) {
 			callables.add(
 					callablePart(
@@ -60,7 +60,7 @@ public abstract class ComplexMoving {
 	
 	private Callable callablePart(int leftBoard , int rightBoard, Circle circle) {
 		return () -> {
-			//---------нахождение нужного круга для запуска след части moving-------------
+			//---------Г­Г ГµГ®Г¦Г¤ГҐГ­ГЁГҐ Г­ГіГ¦Г­Г®ГЈГ® ГЄГ°ГіГЈГ  Г¤Г«Гї Г§Г ГЇГіГ±ГЄГ  Г±Г«ГҐГ¤ Г·Г Г±ГІГЁ moving-------------
 			Circle tmpCircle = new Circle(circle);
 			
 			for (int i = 0; i < leftBoard; ++i)
